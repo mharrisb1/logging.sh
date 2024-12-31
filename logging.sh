@@ -56,7 +56,11 @@ log_message() {
   if log_should_log "$level"; then
     local color
     color=$(log_get_color "$level")
-    echo -e "[$timestamp] [${color}$level${COLOR_RESET}] $message${COLOR_RESET}"
+    if [[ "$level" == "ERROR" ]]; then
+      echo -e "[$timestamp] [${color}$level${COLOR_RESET}] $message${COLOR_RESET}" >&2
+    else
+      echo -e "[$timestamp] [${color}$level${COLOR_RESET}] $message${COLOR_RESET}"
+    fi
   fi
 }
 
